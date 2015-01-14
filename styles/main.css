@@ -1,0 +1,116 @@
+/**
+ * Main Style Sheet
+ * Way2CU - AES Encryption/Decryption
+ *
+ * Copyright (c) 2015. by Way2CU, http://way2cu.com
+ * Authors: Mladen Mijatov
+ */
+
+@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400);
+
+body {
+	background-color: #373737;
+
+	color: #909090;
+	font-family: Roboto Condensed;
+	font-size: 1.1rem;
+}
+
+/**
+ * Content
+ */
+div#content {
+	max-width: 900px;
+	margin: 0px auto;
+}
+
+label {
+	display: block;
+	margin-bottom: 1em;
+}
+
+label span {
+	display: block;
+}
+
+label input,
+label textarea {
+	padding: 5px;
+
+	border: 0px;
+	border-radius: 2px;
+	background-color: #4C4C4C;
+
+	color: white;
+	font-family: Roboto Condensed;
+	font-size: 1.1rem;
+	box-shadow: 0px 0px 0px 1px #373737;
+
+	transition: all 0.3s;
+}
+
+label input {
+	min-width: 400px;
+}
+
+label textarea {
+	resize: vertical;
+}
+
+label input:focus,
+label textarea:focus {
+	outline: none;
+	box-shadow: 0px 0px 0px 1px #373737, 0px 0px 5px #88D7E6;
+}
+
+button {
+	padding: 5px 20px;
+
+	border: 1px solid #01727B;
+	border-top-color: #88D7E6;
+	border-left-color: #88D7E6;
+	border-radius: 3px;
+	background-color: #38C0D4;
+
+	color: white;
+	font-family: Roboto Condensed;
+	font-size: 1.1rem;
+
+	transition: all 0.1s;
+}
+
+button:disabled {
+	opacity: 0.5;
+}
+
+button:active {
+	border-color: #01727B;
+	border-bottom-color: #88D7E6;
+	border-right-color: #88D7E6;
+}
+
+button:focus {
+	outline: none;
+	box-shadow: 0px 0px 0px 1px #373737, 0px 0px 5px #88D7E6;
+}
+
+a {
+	color: #909090;
+}
+
+a:hover {
+	color: #88D7E6;
+}
+
+/**
+ * Footer
+ */
+footer {
+	max-width: 900px;
+	margin: 0px auto;
+	padding-top: 50px;
+
+	font-size: 0.8em;
+	font-weight: 300;
+	font-style: italic;
+}

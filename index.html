@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>Way2CU - AES Encryption/Decryption</title>
+		<link rel="stylesheet" href="styles/main.css" type="text/css" media="screen" charset="utf-8">
+		<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js" type="text/javascript" charset="utf-8"></script>
+		<script src="scripts/main.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="content">
+			<!-- Active elements -->
+			<form action="javascript:void(0);" accept-charset="utf-8">
+				<label>
+					<span>Password:</span>
+					<input type="password" name="password"/>
+				</label>
+
+				<label>
+					<span>Message:</span>
+					<textarea rows="10" cols="80" name="message"></textarea>
+				</label>
+
+				<div class="controls">
+					<button type="button" name="encrypt" disabled>Encrypt</button>
+					<button type="button" name="decrypt" disabled>Decrypt</button>
+				</div>
+			</form>
+		</div>
+
+		<footer>
+			Copyright &copy; 2015. by <a href="http://way2cu.com">Way2CU</a>.
+			Crypt tools by <a href="https://code.google.com/p/crypto-js/">CryptoJS</a>.
+		</footer>
+	</body>
+</html>
