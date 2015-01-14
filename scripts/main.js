@@ -16,7 +16,9 @@ Page.encrypt_message = function(event) {
 	var message = Page.input_message.value;
 
 	// encrypt message
-	message = CryptoJS.AES.encrypt(message, password);
+	message = CryptoJS.AES.encrypt(message, password).toString();
+	if (message.slice(-1) != '=')
+		message = message + '=';
 
 	// replace content
 	Page.input_message.value = message;
