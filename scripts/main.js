@@ -12,16 +12,18 @@ var Page = Page || {};
  * Encrypt message with provided password and replace content for textarea.
  */
 Page.encrypt_message = function(event) {
-	var encoder = new TextEncoder('utf-8');
 	var password = Page.input_password.value;
 	var message = Page.input_message.value;
-	var vector = crypto.getRandomValues(new Uint8Array(16));
 
 	// make sure encryption is supported
-	if (!crypto.subtle) {
-		alert('Sorry, your browser doesn\'t provider support for cryptographic tools.');
+	if (!window.crypto || !window.crypto.subtle) {
+		alert('Sorry, your browser doesn\'t provide support for cryptographic tools.');
 		return;
 	}
+
+	// get objects after check
+	var encoder = new TextEncoder('utf-8');
+	var vector = crypto.getRandomValues(new Uint8Array(16));
 
 	// create key hash
 	crypto.subtle.digest({name: 'SHA-256'}, encoder.encode(password))
@@ -64,8 +66,6 @@ Page.encrypt_message = function(event) {
  * Decrypt pasted message and replace content of textarea.
  */
 Page.decrypt_message = function(event) {
-	var encoder = new TextEncoder('utf-8');
-	var decoder = new TextDecoder('utf-8');
 	var password = Page.input_password.value;
 	var message = Page.input_message.value;
 
@@ -73,10 +73,14 @@ Page.decrypt_message = function(event) {
 	message = message.replace(/\=+\s*$/, '');
 
 	// make sure encryption is supported
-	if (!crypto.subtle) {
-		alert('Sorry, your browser doesn\'t provider support for cryptographic tools.');
+	if (!window.crypto || !window.crypto.subtle) {
+		alert('Sorry, your browser doesn\'t provide support for cryptographic tools.');
 		return;
 	}
+
+	// get objects after check
+	var encoder = new TextEncoder('utf-8');
+	var decoder = new TextDecoder('utf-8');
 
 	// create key hash
 	crypto.subtle.digest({name: 'SHA-256'}, encoder.encode(password))
