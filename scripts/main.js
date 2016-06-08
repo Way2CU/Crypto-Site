@@ -2,7 +2,7 @@
  * Main JavaScript
  * Way2CU - AES Encryption/Decryption
  *
- * Copyright (c) 2015. by Way2CU, http://way2cu.com
+ * Copyright (c) 2016. by Way2CU, http://way2cu.com
  * Authors: Mladen Mijatov
  */
 
@@ -12,47 +12,100 @@ var Page = Page || {};
  * Encrypt message with provided password and replace content for textarea.
  */
 Page.encrypt_message = function(event) {
+	var encoder = new TextEncoder('utf-8');
 	var password = Page.input_password.value;
 	var message = Page.input_message.value;
 
-	// encrypt message
-	message = CryptoJS.AES.encrypt(message, password).toString();
-	if (message.slice(-1) != '=')
-		message = message + '=';
+	// make sure encryption is supported
+	if (!crypto.subtle) {
+		alert('Sorry, your browser doesn\'t provider support for cryptographic tools.');
+		return;
+	}
 
-	// replace content
-	Page.input_message.value = message;
+	// create key hash
+	crypto.subtle.digest({name: 'SHA-256'}, encoder.encode(password))
+		.then(function(hash) {
+			return crypto.subtle.importKey('raw', hash, {name: 'AES-CBC'}, false, ['encrypt']);
+		})
 
-	// dispatch event
-	var event = document.createEvent('HTMLEvents');
-	event.initEvent('input', true, true);
-	event.eventName = 'input';
+		// encrypt message
+		.then(function(key) {
+			var vector = new Uint8Array(16);
+			var data = encoder.encode(message);
+			return crypto.subtle.encrypt({name: 'AES-CBC', iv: vector}, key, data);
+		})
 
-	Page.input_message.dispatchEvent(event);
+		// replace message text
+		.then(function(data) {
+			var text = String.fromCharCode.apply(null, new Uint8Array(data));
+			var text = btoa(text);
 
-	// select content for easier operation
-	Page.input_message.select();
+			// make sure we have trailing equals sign
+			if (text.slice(-1) != '=')
+				text = text + '=';
+
+			// replace content
+			Page.input_message.value = text;
+
+			// dispatch event
+			var event = document.createEvent('HTMLEvents');
+			event.initEvent('input', true, true);
+			event.eventName = 'input';
+
+			Page.input_message.dispatchEvent(event);
+
+			// select content for easier operation
+			Page.input_message.select();
+		});
 };
 
 /**
  * Decrypt pasted message and replace content of textarea.
  */
 Page.decrypt_message = function(event) {
+	var encoder = new TextEncoder('utf-8');
+	var decoder = new TextDecoder('utf-8');
 	var password = Page.input_password.value;
 	var message = Page.input_message.value;
 
-	// decrypt message
-	message = CryptoJS.AES.decrypt(message, password);
+	// make sure message doesn't have equals sign
+	message = message.replace(/\=+\s*$/, '');
 
-	// replace content
-	Page.input_message.value = message.toString(CryptoJS.enc.Utf8);
+	// make sure encryption is supported
+	if (!crypto.subtle) {
+		alert('Sorry, your browser doesn\'t provider support for cryptographic tools.');
+		return;
+	}
 
-	// dispatch event
-	var event = document.createEvent('HTMLEvents');
-	event.initEvent('input', true, true);
-	event.eventName = 'input';
+	// create key hash
+	crypto.subtle.digest({name: 'SHA-256'}, encoder.encode(password))
+		.then(function(hash) {
+			return crypto.subtle.importKey('raw', hash, {name: 'AES-CBC'}, false, ['decrypt']);
+		})
 
-	Page.input_message.dispatchEvent(event);
+		// encrypt message
+		.then(function(key) {
+			var vector = new Uint8Array(16);
+			var raw_message = atob(message);
+			var char_list = Array.from(raw_message).map(function(c) { return c.charCodeAt(0) });
+			var data = Uint8Array.from(char_list);
+			return crypto.subtle.decrypt({name: 'AES-CBC', iv: vector}, key, data);
+		})
+
+		// replace message text
+		.then(function(data) {
+			var text = decoder.decode(new Uint8Array(data));
+
+			// replace content
+			Page.input_message.value = text;
+
+			// dispatch event
+			var event = document.createEvent('HTMLEvents');
+			event.initEvent('input', true, true);
+			event.eventName = 'input';
+
+			Page.input_message.dispatchEvent(event);
+		});
 };
 
 /**

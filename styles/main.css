@@ -6,20 +6,40 @@
  * Authors: Mladen Mijatov
  */
 
-@import url(//fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400);
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url(../images/fonts/roboto-normal.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Roboto Italic'), local('Roboto-Italic'), url(../images/fonts/roboto-italic.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+@keyframes glow {
+	from { opacity: 0.7; }
+	to { opacity: 1; }
+}
 
 body {
-	background-color: #373737;
+	background-color: #2c3e50;
 
-	color: #909090;
-	font-family: Roboto Condensed;
+	color: #ecf0f1;
+	font-family: Roboto;
 	font-size: 1.1rem;
 }
 
 header {
 	max-width: 900px;
 	margin: 0px auto;
-	padding-bottom: 30px;
+	padding-top: 3em;
+	padding-bottom: 3em;
 
 	text-align: center;
 }
@@ -32,27 +52,56 @@ div#content {
 	margin: 0px auto;
 }
 
+form {
+	counter-reset: steps;
+}
+
 label {
 	display: block;
+	position: relative;
 	margin-bottom: 1em;
+	counter-increment: steps;
+}
+
+label:before {
+	position: absolute;
+	top: 1em;
+	left: -3em;
+	width: 1em;
+	height: 1em;
+	padding: 0.5em;
+	content: counter(steps);
+
+	border: 2px solid #2980b9;
+	border-radius: 50%;
+
+	color: #2980b9;
+	font-size: 1.2em;
+	font-weight: bold;
+	text-align: center;
+	line-height: 100%;
+}
+
+label.inline {
+	display: inline-block;
+	margin-right: 1em;
 }
 
 label span {
 	display: block;
+	margin-bottom: 0.2em;
 }
 
 label input,
 label textarea {
-	padding: 5px;
+	padding: calc(0.5em - 2px);
 
-	border: 0px;
-	border-radius: 2px;
-	background-color: #4C4C4C;
+	border: 2px solid #ecf0f1;
+	background-color: #ecf0f1;
 
-	color: white;
-	font-family: Roboto Condensed;
+	color: #2c3e50;
+	font-family: Roboto;
 	font-size: 1.1rem;
-	box-shadow: 0px 0px 0px 1px #373737;
 
 	transition: all 0.3s;
 }
@@ -67,43 +116,43 @@ label textarea {
 
 label input:focus,
 label textarea:focus {
-	outline: none;
-	box-shadow: 0px 0px 0px 1px #373737, 0px 0px 5px #88D7E6;
+	border-color: #f39c12;
+}
+
+div.controls {
+	display: inline-block;
 }
 
 button {
-	padding: 5px 20px;
+	padding: 0.5em 2em;
 
-	border: 1px solid #01727B;
-	border-top-color: #88D7E6;
-	border-left-color: #88D7E6;
-	border-radius: 3px;
-	background-color: #38C0D4;
+	border: 0;
+	background-color: #2980b9;
+	background-image: linear-gradient(180deg, #3498db 0%, #2980b9 100%);
 
 	color: white;
-	font-family: Roboto Condensed;
+	font-family: Roboto;
 	font-size: 1.1rem;
 
 	transition: all 0.1s;
 }
 
-button:disabled {
-	opacity: 0.5;
+button:active {
+	background-image: linear-gradient(0deg, #3498db 0%, #2980b9 100%);
 }
 
-button:active {
-	border-color: #01727B;
-	border-bottom-color: #88D7E6;
-	border-right-color: #88D7E6;
+button:disabled,
+button:disabled:active {
+	opacity: 0.5;
+	background-image: linear-gradient(180deg, #95a5a6 0%, #7f8c8d 100%);
 }
 
 button:focus {
-	outline: none;
-	box-shadow: 0px 0px 0px 1px #373737, 0px 0px 5px #88D7E6;
+	outline: 1px solid white;
 }
 
 a {
-	color: #909090;
+	color: #ecf0f1;
 }
 
 a:hover {
@@ -116,9 +165,7 @@ a:hover {
 footer {
 	max-width: 900px;
 	margin: 0px auto;
-	padding-top: 50px;
 
 	font-size: 0.8em;
-	font-weight: 300;
 	font-style: italic;
 }
