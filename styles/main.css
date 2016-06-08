@@ -38,8 +38,8 @@ body {
 header {
 	max-width: 900px;
 	margin: 0px auto;
-	padding-top: 3em;
-	padding-bottom: 3em;
+	padding-top: 2em;
+	padding-bottom: 2em;
 
 	text-align: center;
 }
@@ -157,6 +157,23 @@ a {
 
 a:hover {
 	color: #88D7E6;
+}
+
+article {
+	display: block;
+	padding-top: 1em;
+	padding-bottom: 2em;
+}
+
+article h3 {
+	margin: 0;
+	padding: 0;
+	color: #e74c3c;
+}
+
+article p {
+	margin: 0;
+	padding: 0;
 }
 
 /**

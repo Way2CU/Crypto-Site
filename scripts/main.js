@@ -15,6 +15,7 @@ Page.encrypt_message = function(event) {
 	var encoder = new TextEncoder('utf-8');
 	var password = Page.input_password.value;
 	var message = Page.input_message.value;
+	var vector = crypto.getRandomValues(new Uint8Array(16));
 
 	// make sure encryption is supported
 	if (!crypto.subtle) {
@@ -30,7 +31,6 @@ Page.encrypt_message = function(event) {
 
 		// encrypt message
 		.then(function(key) {
-			var vector = new Uint8Array(16);
 			var data = encoder.encode(message);
 			return crypto.subtle.encrypt({name: 'AES-CBC', iv: vector}, key, data);
 		})
@@ -38,7 +38,8 @@ Page.encrypt_message = function(event) {
 		// replace message text
 		.then(function(data) {
 			var text = String.fromCharCode.apply(null, new Uint8Array(data));
-			var text = btoa(text);
+			var vector_text = String.fromCharCode.apply(null, vector);
+			var text = btoa(vector_text + text);
 
 			// make sure we have trailing equals sign
 			if (text.slice(-1) != '=')
@@ -85,10 +86,16 @@ Page.decrypt_message = function(event) {
 
 		// encrypt message
 		.then(function(key) {
-			var vector = new Uint8Array(16);
-			var raw_message = atob(message);
-			var char_list = Array.from(raw_message).map(function(c) { return c.charCodeAt(0) });
-			var data = Uint8Array.from(char_list);
+			var raw_data = atob(message);
+			var raw_vector = raw_data.substr(0, 16);
+			var raw_message = raw_data.substr(16);
+
+			var message_chars = Array.from(raw_message).map(function(c) { return c.charCodeAt(0) });
+			var data = Uint8Array.from(message_chars);
+
+			var vector_chars = Array.from(raw_vector).map(function(c) { return c.charCodeAt(0) });
+			var vector = Uint8Array.from(vector_chars);
+
 			return crypto.subtle.decrypt({name: 'AES-CBC', iv: vector}, key, data);
 		})
 
