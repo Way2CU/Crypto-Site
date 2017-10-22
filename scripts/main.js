@@ -67,7 +67,7 @@ Page.encrypt_message = function(event) {
  */
 Page.decrypt_message = function(event) {
 	var password = Page.input_password.value;
-	var message = Page.input_message.value;
+	var message = Page.input_message.value.trim();
 
 	// make sure message doesn't have equals sign
 	message = message.replace(/\=+\s*$/, '');
@@ -132,9 +132,21 @@ Page.handle_message_change = function(event) {
 		return;
 
 	// check if message is encrypted or not
-	if (Page.input_message.value.slice(-1) == '=')
+	if (Page.input_message.value.trim().slice(-1) == '=')
 		Page.button_encrypt.disabled = true; else
 		Page.button_decrypt.disabled = true;
+};
+
+/**
+ * Handle changing option to show password as clear text.
+ * @param object event
+ */
+Page.handle_show_password_change = function(event) {
+	var show_password = event.target.checked;
+
+	if (show_password)
+		Page.input_password.type = 'text'; else
+		Page.input_password.type = 'password';
 };
 
 /**
@@ -147,11 +159,13 @@ Page.on_site_load = function(event) {
 	Page.input_message = document.getElementsByName('message')[0];
 	Page.button_encrypt = document.getElementsByName('encrypt')[0];
 	Page.button_decrypt = document.getElementsByName('decrypt')[0];
+	Page.show_password_checkbox = document.getElementsByName('show')[0];
 
 	// connect events
 	Page.button_encrypt.addEventListener('click', Page.encrypt_message, false);
 	Page.button_decrypt.addEventListener('click', Page.decrypt_message, false);
 	Page.input_message.addEventListener('input', Page.handle_message_change, false);
+	Page.show_password_checkbox.addEventListener('change', Page.handle_show_password_change);
 };
 
 // add event listener for document load
