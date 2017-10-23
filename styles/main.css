@@ -2,7 +2,7 @@
  * Main Style Sheet
  * Way2CU - AES Encryption/Decryption
  *
- * Copyright (c) 2015. by Way2CU, http://way2cu.com
+ * Copyright (c) 2017. by Way2CU, http://way2cu.com
  * Authors: Mladen Mijatov
  */
 
@@ -52,15 +52,10 @@ div#content {
 	margin: 0px auto;
 }
 
-form {
-	counter-reset: steps;
-}
-
 label {
 	display: block;
 	position: relative;
 	margin-bottom: 1em;
-	counter-increment: steps;
 }
 
 label:not(.checkbox):before {
@@ -70,7 +65,6 @@ label:not(.checkbox):before {
 	width: 1em;
 	height: 1em;
 	padding: 0.5em;
-	content: counter(steps);
 
 	border: 2px solid #2980b9;
 	border-radius: 50%;
@@ -161,8 +155,7 @@ a:hover {
 
 article {
 	display: block;
-	padding-top: 1em;
-	padding-bottom: 2em;
+	padding: 2em 0;
 }
 
 article h3 {
@@ -185,4 +178,14 @@ footer {
 
 	font-size: 0.8em;
 	font-style: italic;
+
+	color: #2980b9;
+}
+
+footer a {
+	color: #2980b9;
+}
+
+footer a:hover {
+	color: white;
 }

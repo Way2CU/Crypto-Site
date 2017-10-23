@@ -18,13 +18,19 @@
 				<!-- Password input -->
 				<label class="inline">
 					<span>Password:</span>
-					<input type="password" name="password"/>
+					<input type="password" name="password" autocomplete="off"/>
 				</label>
 
 				<!-- Show password -->
 				<label class="inline checkbox">
 					<input type="checkbox" name="show"/>
-					<span>Show</span>
+					<span>Show password</span>
+				</label>
+
+				<!-- Message to encrypt or decrypt -->
+				<label>
+					<span>Message:</span>
+					<textarea rows="10" cols="80" name="message"></textarea>
 				</label>
 
 				<!-- Encryption controls -->
@@ -32,15 +38,9 @@
 					<button type="button" name="encrypt" disabled>Encrypt</button>
 					<button type="button" name="decrypt" disabled>Decrypt</button>
 				</div>
-
-				<!-- Message to encrypt or decrypt -->
-				<label>
-					<span>Message:</span>
-					<textarea rows="10" cols="80" name="message"></textarea>
-				</label>
 			</form>
 
-			<article>
+			<article class="notice">
 				<h3>Important notice!</h3>
 				<p>
 				If possible avoid reusing the same password! With repeated use you might
@@ -50,7 +50,7 @@
 		</div>
 
 		<footer>
-			Copyright &copy; 2016. by <a href="http://way2cu.com">Way2CU</a>. All rights reserved.
+			Copyright &copy; 2017. by <a href="http://way2cu.com">Way2CU</a>. All rights reserved.
 		</footer>
 	</body>
 </html>
