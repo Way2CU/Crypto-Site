@@ -44,6 +44,10 @@ header {
 	text-align: center;
 }
 
+header h1 {
+	display: none;
+}
+
 /**
  * Content
  */
@@ -106,15 +110,13 @@ label input:not([type=checkbox]) {
 
 label textarea {
 	resize: vertical;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 label input:focus,
 label textarea:focus {
 	border-color: #f39c12;
-}
-
-div.controls {
-	display: inline-block;
 }
 
 button {
@@ -145,6 +147,10 @@ button:focus {
 	outline: 1px solid white;
 }
 
+button[name=help] {
+	float: right;
+}
+
 a {
 	color: #ecf0f1;
 }
@@ -167,6 +173,42 @@ article h3 {
 article p {
 	margin: 0;
 	padding: 0;
+}
+
+/**
+ * Help article
+ */
+article.help {
+	position: fixed;
+	top: 3em;
+	left: 50%;
+	width: 800px;
+	padding: 1em;
+
+	border-radius: 5px;
+	background-color: white;
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+
+	color: #2c3e50;
+
+	transform: translateX(-50%);
+	transition: all 0.5s;
+
+	opacity: 0;
+	pointer-events: none;
+}
+
+article.help.visible {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+article.help p {
+	margin-bottom: 1em;
+}
+
+article.help a {
+	color: #3498db;
 }
 
 /**

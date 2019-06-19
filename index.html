@@ -4,12 +4,13 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8">
 		<title>Way2CU - AES Encryption/Decryption</title>
 		<link rel="stylesheet" href="styles/main.css" type="text/css" media="screen" charset="utf-8">
-		<script src="scripts/main.js" type="text/javascript" integrity="sha384-keNlXWf643SaivKbUL3vuGiKTiVd6772S9F/JG7EV4BjxZ2CCvkVMrtLVN+s1DG/"></script>
+		<script src="scripts/main.js" type="text/javascript" integrity="sha384-A71yR5xqfAIRjrkiCW/yjxznHN/rCyTRfydnYJN7kRecQwghFuGOlyVysa1lWqsK"></script>
 	</head>
 
 	<body>
 		<header>
 			<img src="images/logo.png" alt="Way2CU" width="195" height="170">
+			<h1>Way2CU - On site AES encryption/decryption tool.</h1>
 			<div>On site <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES</a> encryption/decryption tool.</div>
 		</header>
 
@@ -21,8 +22,10 @@
 					<input type="password" name="password" autocomplete="off"/>
 				</label>
 
+				<button type="button" name="generate">Generate</button>
+
 				<!-- Show password -->
-				<label class="inline checkbox">
+				<label class="checkbox">
 					<input type="checkbox" name="show"/>
 					<span>Show password</span>
 				</label>
@@ -37,20 +40,72 @@
 				<div class="controls">
 					<button type="button" name="encrypt" disabled>Encrypt</button>
 					<button type="button" name="decrypt" disabled>Decrypt</button>
+					<button type="button" name="help">Help</button>
 				</div>
 			</form>
+
+			<article class="help">
+				<h3>How does it work?</h3>
+				<p>
+					This tool uses your browser's built-in functions to encrypt and decrypt data. This
+					means all operations are done inside of browser and never leave your computer. To avoid
+					sending data to the internet your browser must have this support, which most modern
+					browsers do.
+				</p>
+
+				<h3>How secure is it?</h3>
+				<p>
+					Algorithm itself is the AES winner and is certified by CRYPTREC, NESSIE and NSA. However
+					its implementation depends on browser vendor and not developers of this tool.
+				</p>
+				<p>
+					Algorithm used is AES-<a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_Block_Chaining_(CBC)">CBC</a>
+					with key derived by hashing original password with SHA-256, effectively increasing key size.
+				</p>
+				<p>
+					AES was approved by NSA for top secret use. That said, data is only secure if
+					password remains private. Sharing generated URL/password must be done with care.
+					In addition to that, sharing URL/password and message through same medium (SMS, email, chat)
+					defeats the purpose of encryption as both parts needed for decryption are available.
+				</p>
+
+				<h3>Why is password field populated automatically?</h3>
+				<p>
+					In order to provide better quality of encryption this tool will generate random
+					password 16 characters in length every time it's opened without any additional information.
+					You are free to change this password to something else.
+				</p>
+
+				<h3>Why does the URL change while writing password?</h3>
+				<p>
+					Part of the URL contains password you are entering to make sharing easier. After entering
+					entering the password, all you need to do is share the generated URL with recipient and
+					send message contents through different medium (SMS, email, chat, etc.).
+				</p>
+				<p>
+					All they need to do then is open the URL you provided, paste contents of the message and
+					click on the "Decrypt" button.
+				</p>
+				<p>
+					It's important to note part of the URL which contains password is never sent over internet
+					when page is opened. It stays local and private to your browser.
+				</p>
+
+				<button type="button" name="close_help">Close</button>
+			</article>
 
 			<article class="notice">
 				<h3>Important notice!</h3>
 				<p>
 				If possible avoid reusing the same password! With repeated use you might
-				reduce quality of protection.
+				reduce quality of protection. Do <u>not</u> share password and message through
+				same medium (chat, SMS, email, etc.).
 				</p>
 			</article>
 		</div>
 
 		<footer>
-			Copyright &copy; 2017. by <a href="http://way2cu.com">Way2CU</a>. All rights reserved.
+			Copyright &copy; 2019. by <a href="http://way2cu.com">Way2CU</a>. All rights reserved.
 		</footer>
 	</body>
 </html>
